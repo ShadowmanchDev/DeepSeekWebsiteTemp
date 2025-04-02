@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShadowmanchDev | Developer & Content Creator</title>
+    <style>
+        :root {
+            --header-footer: #222222;
+            --primary: #0a192f;
+            --secondary: #172a45;
+            --accent: #64ffda;
+            --text-light: #ccd6f6;
+            --text-dark: #8892b0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Calibre', 'Inter', 'San Francisco', 'SF Pro Text', -apple-system, system-ui, sans-serif;
+        }
+        
+        body {
+            background-color: var(--primary);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: var(--header-footer);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links > li {
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text-light);
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+        
+        /* Hero Section */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+            background-color: var(--primary);
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .hero-text h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .hero-text h2 {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+        
+        .hero-text p {
+            max-width: 600px;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            color: var(--accent);
+            background-color: transparent;
+            border: 1px solid var(--accent);
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: rgba(100, 255, 218, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        /* About Section */
+        #about {
+            padding: 8rem 2rem;
+            background-color: var(--secondary);
+        }
+        
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 0;
+            width: 70px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        .about-content {
+            display: flex;
+            gap: 3rem;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+        
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .skill {
+            background-color: rgba(100, 255, 218, 0.1);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .about-image {
+            flex: 1;
+            position: relative;
+        }
+        
+        .about-image img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 5px;
+            filter: grayscale(100%) contrast(1);
+            transition: all 0.3s ease;
+        }
+        
+        .about-image img:hover {
+            filter: none;
+        }
+        
+        .about-image::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--accent);
+            border-radius: 5px;
+            z-index: -1;
+            transition: all 0.3s ease;
+        }
+        
+        .about-image:hover::after {
+            top: 15px;
+            left: 15px;
+        }
+        
+        /* Projects Section */
+        #projects {
+            padding: 8rem 2rem;
+            background-color: var(--primary);
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .project-card {
+            background-color: var(--secondary);
+            border-radius: 5px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-image {
+            height: 200px;
+            overflow: hidden;
+            flex-grow: 1;
+        }
+        
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
+        
+        .project-links {
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .github-link {
+            color: var(--text-light);
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .github-link:hover {
+            color: var(--accent);
+        }
+        
+        /* Contact Section */
+        #contact {
+            padding: 8rem 2rem;
+            background-color: var(--secondary);
+        }
+        
+        .contact-content {
+            display: flex;
+            gap: 3rem;
+        }
+        
+        .contact-text {
+            flex: 1;
+        }
+        
+        .contact-text p {
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        /* Pixel Art Social Icons */
+        .twitter-icon {
+            width: 30px;
+            height: 30px;
+            background: #1DA1F2;
+            position: relative;
+        }
+        .twitter-icon:before {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 6px;
+            background: #1DA1F2;
+            top: -6px;
+            left: 10px;
+        }
+        .twitter-icon:after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 10px;
+            background: #1DA1F2;
+            top: 10px;
+            left: -6px;
+        }
+
+        .github-icon {
+            width: 30px;
+            height: 30px;
+            background: #333;
+            border-radius: 15px;
+            position: relative;
+        }
+        .github-icon:before {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 12px;
+            background: #333;
+            border-radius: 0 0 11px 11px;
+            top: 15px;
+            left: 4px;
+        }
+        .github-icon:after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: white;
+            top: 8px;
+            left: 12px;
+            box-shadow: 10px 0 0 white, 5px 5px 0 white, -5px 5px 0 white;
+        }
+
+        .youtube-icon {
+            width: 30px;
+            height: 22px;
+            background: #FF0000;
+            position: relative;
+        }
+        .youtube-icon:before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 10px solid white;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            top: 5px;
+            left: 10px;
+        }
+
+        .instagram-icon {
+            width: 30px;
+            height: 30px;
+            background: #f09433;
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
+            border-radius: 8px;
+            position: relative;
+        }
+        .instagram-icon:before {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border: 3px solid white;
+            border-radius: 5px;
+            top: 2px;
+            left: 2px;
+        }
+        .instagram-icon:after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            top: 5px;
+            right: 5px;
+        }
+
+        .small-icon {
+            transform: scale(0.7);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--header-footer);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .footer-links a {
+            color: var(--text-light);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .copyright {
+            color: var(--text-dark);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--header-footer);
+                flex-direction: column;
+                padding: 1rem 2rem;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .about-content,
+            .contact-content {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                margin-top: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">ShadowmanchDev</a>
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">☰</div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h2>Hi, I'm</h2>
+                <h1>ShadowmanchDev</h1>
+                <h2>Developer & Content Creator</h2>
+                <p>I build innovative software solutions and create educational tech content to help others learn programming and development.</p>
+                <a href="#contact" class="cta-button">Get In Touch</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about">
+        <div class="section-container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Hello! I'm ShadowmanchDev, a developer with experience building web applications and creating tech content. My passion lies in solving complex problems and sharing my knowledge with the developer community.</p>
+                    <p>I specialize in frontend technologies including React and JavaScript, but I'm always exploring new frameworks and languages to expand my skill set.</p>
+                    <div class="skills">
+                        <span class="skill">JavaScript</span>
+                        <span class="skill">React</span>
+                        <span class="skill">Python</span>
+                        <span class="skill">Video Editing</span>
+                        <span class="skill">UI Design</span>
+                        <span class="skill">CSS</span>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="urmom1.jpg" alt="ShadowmanchDev">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="section-container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="terminal.jpg" alt="CodeCollab">
+                    </div>
+                    <div class="project-links">
+                        <a href="www.github.com" class="github-link">
+                            <div class="github-icon small-icon"></div>
+                            View on GitHub
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="pythagoreas.jpg" alt="DevTube">
+                    </div>
+                    <div class="project-links">
+                        <a href="www.github.com" class="github-link">
+                            <div class="github-icon small-icon"></div>
+                            View on GitHub
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="web.jpg" alt="UI Kit">
+                    </div>
+                    <div class="project-links">
+                        <a href="www.github.com" class="github-link">
+                            <div class="github-icon small-icon"></div>
+                            View on GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="section-container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-text">
+                    <p>Whether you have a project idea, want to collaborate, or just want to say hello, I'd love to hear from you!</p>
+                    <p>Feel free to reach out through the form or connect with me on social media.</p>
+                    <div class="social-links">
+                        <a href="https://twitter.com/ShadowmanchDev" class="social-link" title="Twitter">
+                            <div class="twitter-icon"></div>
+                        </a>
+                        <a href="https://instagram.com/ShadowmanchIRL" class="social-link" title="Instagram">
+                            <div class="instagram-icon"></div>
+                        </a>
+                        <a href="https://www.youtube.com/@ShadowmanchDev" class="social-link" title="YouTube">
+                            <div class="youtube-icon"></div>
+                        </a>
+                        <a href="https://github.com/ShadowmanchDev" class="social-link" title="GitHub">
+                            <div class="github-icon"></div>
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm" action="mailto:venom.spiderman011@gmail.com" method="post" enctype="text/plain">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <a href="#" class="logo">ShadowmanchDev</a>
+            <div class="footer-links">
+                <a href="#hero">Home</a>
+                <a href="#about">About</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <p class="copyright">© 2023 ShadowmanchDev. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile Navigation Toggle
+        document.querySelector('.hamburger').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+        
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (window.innerWidth <= 768) {
+                        document.querySelector('.nav-links').classList.remove('active');
+                    }
+                }
+            });
+        });
+        
+        // Form Submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            // Let the default mailto action handle submission
+            this.reset(); // Clears the form after submission
+        });
+        
+        // Animate sections when scrolling
+        function animateOnScroll() {
+            const sections = document.querySelectorAll('section');
+            const windowHeight = window.innerHeight;
+            
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const sectionVisible = 150;
+                
+                if (sectionTop < windowHeight - sectionVisible) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        // Set initial state for animation
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        });
+        
+        // Run animation check on scroll and load
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+    </script>
+</body>
+</html>
